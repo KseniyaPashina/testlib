@@ -88,3 +88,86 @@ void change(sf::Text &t1, sf::Text &t2){
     t2.setString(s2);
     t2.setPosition(t1.getPosition().x + t1.getGlobalBounds().width + 2, t1.getPosition().y);
 }
+
+bool window_hello() {
+    sf::RenderWindow window(sf::VideoMode(500, 300), "Hello");
+
+    sf::Font h1_font;
+    h1_font.loadFromFile("Font/Heading.otf");
+    sf::Font t_font;
+    t_font.loadFromFile("Font/Arial.ttf");
+
+    sf::Text h1("Hello", h1_font, 40);
+    h1.setColor(sf::Color::Black);
+    h1.setStyle(sf::Text::Bold);
+    sf::Vector2f centerPos = sf::Vector2f(window.getSize().x / 2, 20);
+    h1.setPosition(centerPos.x - h1.getGlobalBounds().width / 2, centerPos.y);
+
+    sf::Text t(L"This is a keyboard trainer for developing \nfast typing speed in English layout \n\nPress any key to continue", t_font, 25);
+    t.setColor(sf::Color::Black);
+    t.setPosition(20, h1.getPosition().y + h1.getGlobalBounds().height * 2);
+
+    while (window.isOpen())
+    {
+        sf::Event event;
+        while (window.pollEvent(event))
+        {
+            if (event.type == sf::Event::KeyPressed) {
+                window.close();
+            }
+            if (event.type == sf::Event::Closed) {
+                window.close();
+                return false;
+            }
+        }
+
+        window.clear(sf::Color::White);
+        window.draw(h1);
+        window.draw(t);
+        window.display();
+    }
+
+    return true;
+}
+
+void window_bye(sf::Time time){
+    sf::RenderWindow window(sf::VideoMode(500, 300), "Bye");
+
+    sf::Font h1_font;
+    h1_font.loadFromFile("Font/Heading.otf");
+    sf::Font t_font;
+    t_font.loadFromFile("Font/Arial.ttf");
+
+    sf::Text h1("Goodbye", h1_font, 50);
+    h1.setColor(sf::Color::Black);
+    h1.setStyle(sf::Text::Bold);
+    sf::Vector2f centerPos = sf::Vector2f(window.getSize().x / 2, 30);
+    h1.setPosition(centerPos.x - h1.getGlobalBounds().width / 2, centerPos.y);
+
+    int sec = time.asSeconds();
+    int milli = time.asMilliseconds() % 60;
+    std::string timer = "Your time is ";
+    timer = std::to_string(sec);
+    timer += " : ";
+    timer += std::to_string(milli);
+
+    sf::Text t(timer, t_font, 50);
+    t.setColor(sf::Color::Black);
+    t.setPosition(20, h1.getPosition().y + h1.getGlobalBounds().height * 2);
+
+    while (window.isOpen())
+    {
+        sf::Event event;
+        while (window.pollEvent(event))
+        {
+            if (event.type == sf::Event::Closed || event.type == sf::Event::KeyPressed) {
+                window.close();
+            }
+        }
+
+        window.clear(sf::Color::White);
+        window.draw(h1);
+        window.draw(t);
+        window.display();
+    }
+}
