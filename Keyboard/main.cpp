@@ -1,6 +1,7 @@
 #include "SFML/Graphics.hpp"
 #include "iostream"
 #include "string"
+#include "window.cpp"
 
 int main()
 {

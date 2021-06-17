@@ -1,7 +1,6 @@
 cmake_minimum_required(VERSION 3.8)
 
 add_executable(Keyboard "main.cpp")
-#add_executable(Keyboard "help.cpp")
 target_link_libraries(Keyboard PUBLIC sfml-graphics sfml-window sfml-system)
 
 add_executable(Board "keyboard_tests.cpp")
