@@ -5,6 +5,7 @@
 
 int main()
 {
+
     if (window_hello()) {
         sf::RenderWindow window(sf::VideoMode(1500, 900), "Keyboard", sf::Style::None);
 
