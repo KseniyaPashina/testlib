@@ -6,6 +6,18 @@
 #include "stdlib.h"
 #include "time.h"
 
+/**
+ * Keyboard is a class, which defines buttons with text
+ * each button has got some parameters:
+ * font - responsible for the font of a text (private)
+ * x - responsible for shift of the button from zero value along Ox
+ * y - responsible for shift of the button from zero value along Oy
+ * n_x - responsible for coordinate Ox
+ * n_y - responsible for coordinate Oy
+ * button - responsible for creating rectangle
+ * text - responsible for creating text
+ */
+
 class Keyboard : sf::RectangleShape {
     sf::Font font;
 
@@ -14,6 +26,15 @@ public:
     int n_x, n_y; //матричная сетка
     sf::RectangleShape button;
     sf::Text text;
+    
+    /**
+     * set_value gets and sets the coordinate and offset value
+     *
+     * @param a - responsible for coordinate Ox
+     * @param b - responsible for coordinate Oy
+     * @param c - responsible for shift of the button from zero value along Ox
+     * @param d - responsible for shift of the button from zero value along Oy
+     */
 
     void set_value(int a = 0, int b = 0, int c = 0, int d = 0){
         n_x = a;
@@ -21,6 +42,11 @@ public:
         x = c;
         y = d;
     }
+    
+    /**
+     * draw_button creates a rectangle and gives it a position
+     * @param size - responsible for the dimensions of the rectangle
+     */
 
     void draw_button(sf::Vector2f size = sf::Vector2f(70, 70)){
         button.setSize(size);
@@ -29,6 +55,11 @@ public:
         button.setOutlineColor(sf::Color::Black);
         button.setOutlineThickness(2);
     }
+    
+    /**
+     * draw_text creates text in the given rectangle
+     * @param s responsible for text
+     */
 
     void draw_text(std::string s){
         font.loadFromFile("Font/Arial.ttf");
@@ -41,6 +72,13 @@ public:
 
 };
 
+/**
+ * get_from_file gets text from a file and writes by reference to an array
+ * @param text - character array
+ * @param begin - responsible for the index offset of the cursor in the file
+ * @param count - responsible for the number of characters returned
+ */
+
 void get_from_file(char *text, int begin = 1, int count = 70){
     std::ifstream in;
     in.open("text.txt");
@@ -51,12 +89,25 @@ void get_from_file(char *text, int begin = 1, int count = 70){
     in.close();
 }
 
+/**
+ * get_random creates a random integer in a given range
+ * @param min - responsible for lower limit of number
+ * @param max - responsible for upper limit of number
+ * @return the value of an integer on a given segment
+ */
+
 int get_random(int min, int max)
 {
     srand(time(NULL));
     int num = min + rand() % (max - min + 1);
     return num;
 }
+
+/**
+ * get_text_1 creates correctly typed text
+ * @param t - responsible for the text itself
+ * @param begin - responsible for the offset of the cursor index in the file
+ */
 
 void get_text_1(sf::Text &t, int begin)
 {
@@ -65,6 +116,14 @@ void get_text_1(sf::Text &t, int begin)
     t.setString(text);
     t.setColor(sf::Color::Green);
 }
+
+/**
+ * get_text_2 creates the text to be printed
+ * @param t2 - responsible for the initial text
+ * @param t1 - responsible for correctly typed text
+ * @param t_pos - responsible for the position of the text on the screen
+ * @param begin - responsible for the offset of the cursor index in the file
+ */
 
 void get_text_2(sf::Text &t2, sf::Text t1, sf::Vector2f t_pos, int begin)
 {
@@ -78,6 +137,12 @@ void get_text_2(sf::Text &t2, sf::Text t1, sf::Vector2f t_pos, int begin)
     t2.setPosition(t_pos.x + t1.getGlobalBounds().width + t1.getLetterSpacing(), t_pos.y);
 }
 
+/**
+ * change connects the printed text with the text to be printed
+ * @param t1 - responsible for correctly typed text
+ * @param t2 - responsible for the initial text
+ */
+
 void change(sf::Text &t1, sf::Text &t2){
     std::string s1 = t1.getString();
     std::string s2 = t2.getString();
@@ -89,6 +154,11 @@ void change(sf::Text &t1, sf::Text &t2){
     t2.setString(s2);
     t2.setPosition(t1.getPosition().x + t1.getGlobalBounds().width + 2, t1.getPosition().y);
 }
+
+/**
+ * window_hello creates a welcome window
+ * @return boolean, open or closed window
+ */
 
 bool window_hello() {
     sf::RenderWindow window(sf::VideoMode(500, 300), "Hello");
@@ -130,6 +200,11 @@ bool window_hello() {
 
     return true;
 }
+
+/**
+ * window_bye creates a summary window
+ * @param time - responsible for the typing time of the text
+ */
 
 void window_bye(sf::Time time){
     sf::RenderWindow window(sf::VideoMode(500, 300), "Bye");
