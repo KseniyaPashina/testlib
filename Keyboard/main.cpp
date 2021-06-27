@@ -4,21 +4,26 @@
 
 int main()
 {
-
+    // was the welcome window closed
     if (window_hello()) {
+        
+        // creating the screen
         sf::RenderWindow window(sf::VideoMode(1500, 900), "Keyboard", sf::Style::None);
-
+        
+        // creating font
         sf::Font h1_font;
         h1_font.loadFromFile("Font/Heading.otf");
         sf::Font t_font;
         t_font.loadFromFile("Font/Arial.ttf");
-
+        
+        // creating text on the screen
         sf::Text h1("Keyboard simulator", h1_font, 50);
         h1.setColor(sf::Color::Black);
         h1.setStyle(sf::Text::Bold);
         sf::Vector2f centerPos = sf::Vector2f(window.getSize().x / 2, 50);
         h1.setPosition(centerPos.x - h1.getGlobalBounds().width / 2, centerPos.y);
 
+        // creating main line
         sf::Vertex line[] = {
                 sf::Vertex(sf::Vector2f(203, 250)),
                 sf::Vertex(sf::Vector2f(1300, 250))
@@ -26,18 +31,22 @@ int main()
         line[0].color = sf::Color::Black;
         line[1].color = sf::Color::Black;
 
+        // creating a random number
         int number;
         number = get_random(0, 4031);
 
+        // creating the text that was printed and needs to be printed
         sf::Text t1("", t_font, 30);
         t1.setPosition(sf::Vector2f(250, 250));
         get_text_1(t1, number);
         sf::Text t2("", t_font, 30);
         get_text_2(t2, t1, t1.getPosition(), number);
 
+        // creating printable text
         std::string symbol;
         symbol.reserve(1000);
 
+        // creating a dictionary of keyboard buttons
         std::map<char, Keyboard> board;
 
         Keyboard b;
@@ -365,6 +374,7 @@ int main()
         b_ctrl.draw_button();
         b_ctrl.draw_text("Ctrl");
 
+        // creating timer
         sf::Clock clock;
         bool flag = true;
 
