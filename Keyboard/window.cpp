@@ -152,8 +152,9 @@ void window_bye(sf::Time time){
     timer += std::to_string(milli);
 
     sf::Text t(timer, t_font, 50);
-    t.setColor(sf::Color::Black);
+    t.setColor(sf::Color::Red);
     t.setPosition(20, h1.getPosition().y + h1.getGlobalBounds().height * 2);
+
 
     while (window.isOpen())
     {
