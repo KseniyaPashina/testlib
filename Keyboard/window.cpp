@@ -204,9 +204,10 @@ bool window_hello() {
 /**
  * window_bye creates a summary window
  * @param time - responsible for the typing time of the text
+ * @param count - responsible for the count of mistakes
  */
 
-void window_bye(sf::Time time){
+void window_bye(sf::Time time, int count){
     sf::RenderWindow window(sf::VideoMode(500, 300), "Bye");
 
     sf::Font h1_font;
@@ -221,16 +222,55 @@ void window_bye(sf::Time time){
     h1.setPosition(centerPos.x - h1.getGlobalBounds().width / 2, centerPos.y);
 
     int sec = time.asSeconds();
-    int milli = time.asMilliseconds() % 60;
-    std::string timer = "Your time is ";
-    timer = std::to_string(sec);
+    int min = sec / 60;
+    int millisec = time.asMilliseconds() % 60;
+
+    sf::Text t;
+    t.setOutlineThickness(2);
+    t.setOutlineColor(sf::Color::Black);
+    std::string timer = "";
+
+    int v = 70 / sec;
+    switch (v) {
+        case 0:
+            timer = "Awful ";
+            t.setColor(sf::Color::Black);
+            break;
+        case 1:
+            timer = "Bad ";
+            t.setColor(sf::Color::Red);
+            break;
+        case 2:
+            timer = "Normal ";
+            t.setColor(sf::Color::Yellow);
+            break;
+        case 3:
+            timer = "Great ";
+            t.setColor(sf::Color::Green);
+            break;
+    }
+
+    sec %= 60;
+    timer += std::to_string(min);
     timer += " : ";
-    timer += std::to_string(milli);
+    timer += std::to_string(sec);
+    timer += " : ";
+    timer += std::to_string(millisec);
 
-    sf::Text t(timer, t_font, 50);
-    t.setColor(sf::Color::Red);
-    t.setPosition(20, h1.getPosition().y + h1.getGlobalBounds().height * 2);
+    sf::Text text("Your time is:", t_font, 30);
+    text.setColor(sf::Color::Black);
+    text.setPosition(20, h1.getPosition().y + h1.getGlobalBounds().height * 2);
 
+    t.setString(timer);
+    t.setFont(t_font);
+    t.setCharacterSize(30);
+    t.setPosition(40, text.getPosition().y + text.getGlobalBounds().height * 2);
+
+    std::string mistake = "Your number of mistakes is ";
+    mistake += std::to_string(count);
+    sf::Text text2(mistake, t_font, 30);
+    text2.setColor(sf::Color::Black);
+    text2.setPosition(20, t.getPosition().y + t.getGlobalBounds().height * 2);
 
     while (window.isOpen())
     {
@@ -244,7 +284,9 @@ void window_bye(sf::Time time){
 
         window.clear(sf::Color::White);
         window.draw(h1);
+        window.draw(text);
         window.draw(t);
+        window.draw(text2);
         window.display();
     }
 }
