@@ -377,6 +377,9 @@ int main()
         // creating timer
         sf::Clock clock;
         bool flag = true;
+        
+        // cout of mistackes
+        int count = 0;
 
         while (window.isOpen()) {
             sf::Event event;
@@ -386,7 +389,7 @@ int main()
                 if (event.type == sf::Event::Closed || s.length() == 0) {
                     window.close();
                     sf::Time time = clock.getElapsedTime();
-                    window_bye(time);
+                    window_bye(time, count);
                 } else if (event.type == sf::Event::KeyPressed) {
                     flag = false;
                     const sf::Keyboard::Key keycode = event.key.code;
@@ -400,7 +403,7 @@ int main()
                             change(t1, t2);
                             letter = t2.getString()[0];
                             board[letter].button.setFillColor(sf::Color::Green);
-                        }
+                        } else count += 1;
                     } else if (keycode >= sf::Keyboard::Num0 && keycode <= sf::Keyboard::Num9) {
                         char chr = static_cast<char>(keycode - sf::Keyboard::Num0 + '0');
                         if (chr == letter) {
@@ -409,7 +412,7 @@ int main()
                             change(t1, t2);
                             letter = t2.getString()[0];
                             board[letter].button.setFillColor(sf::Color::Green);
-                        }
+                        } else count += 1;
                     } else if (keycode == sf::Keyboard::Space && ' ' == letter) {
                         symbol.push_back(' ');
                         board[letter].button.setFillColor(sf::Color::White);
